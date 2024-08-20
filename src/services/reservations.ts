@@ -2,6 +2,7 @@ import axios from "axios";
 import { ReservationType } from "@/types";
 import { OptionsReservationType } from "@/types";
 import { formatDate } from "@/utils";
+import { api } from "@/config/domain";
 
 interface fetchReservationsParams {
   page?: number;
@@ -18,23 +19,20 @@ export const fetchReservations = async (
   variables?: fetchReservationsParams
 ): Promise<fetchReservationsResponse> => {
   try {
-    const response = await axios.get(
-      `https://66c37deed057009ee9c072de.mockapi.io/api/v1/reservations`,
-      {
-        params: {
-          page: variables?.page,
-          limit: variables?.limit,
-          // "customer[firstName]": variables?.options?.search,
-          businessDate: variables?.options?.businessDate
-            ? formatDate(variables?.options?.businessDate)
-            : "",
-          status: variables?.options?.status,
-          shift: variables?.options?.shift,
-          area: variables?.options?.area,
-          sortBy: variables?.options?.sortBy,
-        },
-      }
-    );
+    const response = await axios.get(`${api}/reservations`, {
+      params: {
+        page: variables?.page,
+        limit: variables?.limit,
+        // "customer[firstName]": variables?.options?.search,
+        businessDate: variables?.options?.businessDate
+          ? formatDate(variables?.options?.businessDate)
+          : "",
+        status: variables?.options?.status,
+        shift: variables?.options?.shift,
+        area: variables?.options?.area,
+        sortBy: variables?.options?.sortBy,
+      },
+    });
     const newData = await additionalFiltering(
       variables?.options || {},
       response?.data
@@ -52,20 +50,17 @@ export const getTotalReservations = async (
   variables?: fetchReservationsParams
 ): Promise<number> => {
   try {
-    const response = await axios.get(
-      `https://66c37deed057009ee9c072de.mockapi.io/api/v1/reservations`,
-      {
-        params: {
-          // "customer[firstName]": variables?.options?.search,
-          businessDate: variables?.options?.businessDate
-            ? formatDate(variables?.options?.businessDate)
-            : "",
-          status: variables?.options?.status,
-          shift: variables?.options?.shift,
-          area: variables?.options?.area,
-        },
-      }
-    );
+    const response = await axios.get(`${api}/reservations`, {
+      params: {
+        // "customer[firstName]": variables?.options?.search,
+        businessDate: variables?.options?.businessDate
+          ? formatDate(variables?.options?.businessDate)
+          : "",
+        status: variables?.options?.status,
+        shift: variables?.options?.shift,
+        area: variables?.options?.area,
+      },
+    });
     const newData = await additionalFiltering(
       variables?.options || {},
       response?.data
