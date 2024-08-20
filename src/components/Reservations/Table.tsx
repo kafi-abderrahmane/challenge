@@ -53,7 +53,7 @@ const ReservationsTable: React.FC<ReservationsTableProps> = ({
               </table>
               {(!data || data?.reservations?.length === 0) && (
                 <div className="text-[#808080] h-[100px] text-base flex flex-row w-full items-center justify-center ">
-                  No data
+                  No reservation planned
                 </div>
               )}
             </div>

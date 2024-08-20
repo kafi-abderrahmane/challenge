@@ -5,6 +5,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 import {
   OptionsReservationType,
@@ -33,6 +35,7 @@ const ReservationFilter: React.FC<ReservationFilterProps> = ({
     setOptions((prev: OptionsReservationType) => ({
       ...prev,
       businessDate: e.target.value,
+      showAll: false,
     }));
   };
 
@@ -63,8 +66,16 @@ const ReservationFilter: React.FC<ReservationFilterProps> = ({
       sortBy: e?.target?.value as string,
     }));
   };
+
+  const handleShowAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions((prev: OptionsReservationType) => ({
+      ...prev,
+      showAll: event.target.checked,
+      businessDate: "",
+    }));
+  };
   return (
-    <div className="grid grid-cols-4 gap-4 w-full">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
       <TextField
         id="search"
         value={options?.search}
@@ -91,6 +102,7 @@ const ReservationFilter: React.FC<ReservationFilterProps> = ({
           value={options?.status}
           label="Status"
           onChange={handleStatus}>
+          <MenuItem value={""}>ALL</MenuItem>
           <MenuItem value={"CONFIRMED"}>CONFIRMED</MenuItem>
           <MenuItem value={"SEATED"}>SEATED</MenuItem>
           <MenuItem value={"CHECKED OUT"}>CHECKED OUT</MenuItem>
@@ -108,6 +120,7 @@ const ReservationFilter: React.FC<ReservationFilterProps> = ({
           value={options?.shift}
           label="Shift"
           onChange={handleShift}>
+          <MenuItem value={""}>ALL</MenuItem>
           <MenuItem value={"BREAKFAST"}>BREAKFAST</MenuItem>
           <MenuItem value={"LUNCH"}>LUNCH</MenuItem>
           <MenuItem value={"DINNER"}>DINNER</MenuItem>
@@ -124,6 +137,7 @@ const ReservationFilter: React.FC<ReservationFilterProps> = ({
           value={options?.area}
           label="Area"
           onChange={handleArea}>
+          <MenuItem value={""}>ALL</MenuItem>
           <MenuItem value={"MAIN ROOM"}>MAIN ROOM</MenuItem>
           <MenuItem value={"BAR"}>BAR</MenuItem>
         </Select>
@@ -143,6 +157,12 @@ const ReservationFilter: React.FC<ReservationFilterProps> = ({
           <MenuItem value={"name"}>Guest name</MenuItem>
         </Select>
       </FormControl>
+      <FormControlLabel
+        control={
+          <Checkbox checked={options?.showAll} onChange={handleShowAll} />
+        }
+        label="Show All"
+      />
     </div>
   );
 };

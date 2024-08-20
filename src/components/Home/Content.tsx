@@ -19,7 +19,8 @@ export default function HomeContent({ params }: any) {
     status: "",
     shift: "",
     area: "",
-    sortBy: "",
+    sortBy: "id",
+    showAll: false,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {

@@ -30,4 +30,5 @@ export interface OptionsReservationType {
   shift?: ShiftType | "";
   area?: AreaType | "";
   sortBy?: string;
+  showAll?: boolean;
 }
