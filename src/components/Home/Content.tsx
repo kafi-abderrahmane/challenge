@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import ReservationsTable from "@/components/Reservations/Table";
 import FilterReservation from "@/components/Reservations/Filter";
@@ -33,6 +33,10 @@ export default function HomeContent({ params }: any) {
       fetchReservations({ page: currentPage, limit: pageSize, options }),
   });
   const pages = typeof data?.total === "number" ? data?.total / pageSize : 0;
+
+  useEffect(() => {
+    if (currentPage !== 1) setCurrentPage(1);
+  }, [options]);
 
   return (
     <div className="flex min-h-screen flex-col items-center gap-4 w-full">
